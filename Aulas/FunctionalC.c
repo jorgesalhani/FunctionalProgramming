@@ -12,7 +12,7 @@ struct Aluno {
     float n3;
 };
 
-typedef int (*FtnTestaAluno)(struct Aluno*);
+typedef int FtnTestaAluno(struct Aluno*);
 typedef int (*FtnComparaAluno)(struct Aluno *, struct Aluno*);
 
 void printAluno(struct Aluno* aluno) {
