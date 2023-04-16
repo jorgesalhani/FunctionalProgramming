@@ -4,8 +4,6 @@
 #include <string.h>
 
 void printInvertedWord(char* word) {
-    int newWordLen = 2*strlen(word);
-
     int word_i = strlen(word);
     while (word_i >= 0) {
         printf("%c ", word[word_i]);
