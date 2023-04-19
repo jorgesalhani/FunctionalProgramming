@@ -1,3 +1,8 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use foldr" #-}
+{-# HLINT ignore "Redundant if" #-}
+{-# HLINT ignore "Use guards" #-}
+
 factorial :: (Integral a) => a -> a
 factorial 0 = 1
 factorial n = n*factorial (n-1)
@@ -13,3 +18,17 @@ stringLength (h:t) = 1 + stringLength t
 multiplyElements :: (Num a) => [a] -> a
 multiplyElements [] = 1
 multiplyElements (h:t) = h*multiplyElements t
+
+charPrint :: Char -> Char
+charPrint c = c
+
+-- Solving:
+
+-- 1-sumPrimes
+
+-- 2-invertString
+
+stringPrintInverted :: [Char] -> [Char]
+stringPrintInverted [] = []
+stringPrintInverted (h:t) = stringPrintInverted t ++ [h]
+
