@@ -2,6 +2,8 @@
 -- * Find the last element of a list
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use foldr" #-}
+{-# LANGUAGE InstanceSigs #-}
+
 prob1 :: [a] -> a
 prob1 [] = error "ERROR! Empty list!"
 prob1 [t] = t
@@ -44,5 +46,61 @@ prob6 [] = True
 prob6 [_] = True
 prob6 xs = prob5 xs == xs
 
+-- INTERMISSION
+-- ============
+
+-- Interlude: data and type
+-- Bridge card game
+data Suit = Club | Diamond | Heart | Spade
+    deriving (Read, Show, Enum, Eq, Ord)
+
+data CardValue = Two | Three | Four | Five 
+                | Six | Seven | Eight | Nine | Ten
+                | Jack |  Queen | King | Ace
+    deriving (Read, Show, Enum, Eq, Ord)
+
+data Card = Card {value :: CardValue,
+                   suit :: Suit}
+    deriving (Read, Show, Eq)
+
+instance Ord Card where 
+    compare :: Card -> Card -> Ordering
+    compare c1 c2 = compare (value c1, suit c1) (value c2, suit c2)
+
+instance Enum Card where
+    toEnum :: Int -> Card
+    toEnum n = let (v,s) = n`divMod`4 in Card (toEnum v) (toEnum s)
+
+    fromEnum :: Card -> Int
+    fromEnum c = fromEnum (value c) * 4 + fromEnum (suit c)
+
+type Deck = [Card]
+
+deck :: Deck
+deck = [Card val su | val <- [Two .. Ace], su <- [Club .. Spade]]
+
+-- END OF INTERMISSION
+-- ===================
+
 -- Problem 7
 -- ** Flatten a nested list structure
+data NestedList a = Elem a | List [NestedList a]
+prob7 :: NestedList a -> [a] 
+prob7 (List []) = []
+prob7 (Elem a) = [a] 
+prob7 (List(x:xs)) = prob7 x ++ prob7 (List xs)
+
+-- Problem 8
+-- ** Eliminate consecutive duplicates of list
+prob8 :: Eq a => [a] -> [a]
+prob8 [] = []
+prob8 [h] = [h]
+prob8 (h:t) = 
+    if h == head t
+        then prob8 t
+    else 
+        [h] ++ prob8 t
+
+aux8 :: [p] -> p
+aux8 [] = error "Empty list!"
+aux8 (h:t) = h
