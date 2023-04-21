@@ -104,3 +104,15 @@ prob8 (h:t) =
 aux8 :: [p] -> p
 aux8 [] = error "Empty list!"
 aux8 (h:t) = h
+
+-- Problem 9
+-- ** Pack consecutive duplicates of list elements
+prob9 :: Eq a => [a] -> [a]
+prob9 [] = []
+prob9 (h:t) = 
+    if h == head t
+        then [h] ++ prob9 t
+    else
+        ["("] ++ prob9 t
+
+
